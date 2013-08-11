@@ -64,7 +64,7 @@ abstract class Quoter {
                     \\?
                     ([!@\\#])? ([a-z]*)
                 )
-            /ux', $placeholder, $m);
+            /uix', $placeholder, $m);
 
             list(, $name, $listType, $type) = $m;
             if ($type == "") $type = "auto";
