@@ -138,4 +138,14 @@ class TestQuoter extends PHPUnit_Framework_TestCase {
         $this->assertEquals('"a"."b"', $q->quoteIdentifier('a.b'));
     }
 
+    public function testPostgresArray() {
+        $q = new QuoterPostgres();
+        $res = $q->format("?Ai", array(array(1,2,3)));
+        $this->assertEquals("ARRAY[1, 2, 3]", $res);
+        $res = $q->format("?Ai", array(array()));
+        $this->assertEquals("ARRAY[]", $res);
+        $res = $q->format("?Ai", array(1));
+        $this->assertEquals("NULL", $res);
+    }
+
 }

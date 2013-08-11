@@ -18,17 +18,17 @@ abstract class Quoter {
 
     // Минимальный набор квотеров
 
-    abstract public function quoteIdentifier($v);
+    abstract public function quoteIdentifier($v, $phType = "");
 
-    abstract public function quoteString($v);
+    abstract public function quoteString($v, $phType = "");
 
-    abstract public function quoteAuto($v);
+    abstract public function quoteAuto($v, $phType = "");
 
-    abstract public function quoteInt($v);
+    abstract public function quoteInt($v, $phType = "");
 
-    abstract public function quoteFloat($v);
+    abstract public function quoteFloat($v, $phType = "");
 
-    abstract public function quoteBool($v);
+    abstract public function quoteBool($v, $phType = "");
 
     /**********************************/
 
@@ -46,7 +46,7 @@ abstract class Quoter {
                 (?<!\\?)\\?(?!\\?)
                 [!@\\#]? [a-z]*
             )
-        )/ux', $query, -1, PREG_SPLIT_DELIM_CAPTURE);
+        )/uix', $query, -1, PREG_SPLIT_DELIM_CAPTURE);
         $chunks   = array_chunk($parts, 2);
         $out      = array();
         $phIndex  = 1;
@@ -112,14 +112,14 @@ abstract class Quoter {
                 } else {
                     $values = array();
                     foreach ($val as $v) {
-                        $values[] = call_user_func($quoter, $v);
+                        $values[] = call_user_func($quoter, $v, $type);
                     }
                     $escaped = join(", ", $values);
                 }
 
             } else {
                 $quoter  = $this->getTypeQuoter($type);
-                $escaped = call_user_func($quoter, $val);
+                $escaped = call_user_func($quoter, $val, $type);
 
             }
 
