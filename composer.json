@@ -1,6 +1,7 @@
 {
     "name": "yaff/db",
     "type": "library",
+    "version": "1.0.0",
     "description": "Typed placeholders library and PDO helper class",
     "keywords": ["database", "escaping", "quoting", "placeholders"],
     "homepage": "https://github.com/davidmz/yaff-db",
